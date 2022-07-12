@@ -3,17 +3,22 @@
 namespace rocketfellows\TinkoffInvestV1MarketDataRestClient;
 
 use rocketfellows\TinkoffInvestV1RestClient\Client;
+use rocketfellows\TinkoffInvestV1RestClient\exceptions\request\ClientException;
+use rocketfellows\TinkoffInvestV1RestClient\exceptions\request\HttpClientException;
+use rocketfellows\TinkoffInvestV1RestClient\exceptions\request\ServerException;
 
 class MarketDataService implements
     GetLastPricesInterface,
     GetTradingStatusInterface,
-    GetOrderBookInterface
+    GetOrderBookInterface,
+    GetLastTradesInterface
 {
     private const SERVICE_NAME = 'MarketDataService';
 
     private const SERVICE_METHOD_NAME_GET_LAST_PRICES = 'GetLastPrices';
     private const SERVICE_METHOD_NAME_GET_TRADING_STATUS = 'GetTradingStatus';
     private const SERVICE_METHOD_NAME_GET_ORDER_BOOK = 'GetOrderBook';
+    private const SERVICE_METHOD_NAME_GET_LAST_TRADES = 'GetLastTrades';
 
     private $client;
 
@@ -35,6 +40,11 @@ class MarketDataService implements
     public function getOrderBook(array $params): array
     {
         return $this->requestMethod(self::SERVICE_METHOD_NAME_GET_ORDER_BOOK, $params);
+    }
+
+    public function getLastTrades(array $params): array
+    {
+        return $this->requestMethod(self::SERVICE_METHOD_NAME_GET_LAST_TRADES, $params);
     }
 
     private function requestMethod(string $methodName, ?array $params = null): array
